@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Bank
+namespace Bank.forms
 { partial class AddDepositorForm
   {
   /// <summary>

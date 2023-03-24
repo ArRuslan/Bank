@@ -27,49 +27,53 @@
             this.lastProfTime = lastProfTime;
         }
         
-    public long Id {
-        get { return id; }
-    }
-    
-    public string FirstName {
-        get { return firstName; }
-    }
-    
-    public string LastName {
-        get { return lastName; }
-    }
-    
-    public string SurName {
-        get { return surName; }
-    }
-    
-    public string PassportSN {
-        get { return passportS; }
-    }
-    
-    public long PassportNum {
-        get { return passportN; }
-    }
-    
-    public double DepositAmount {
-        get { return depositAmount; }
-    }
-    
-    public int DepositCategory {
-        get { return depositCategory; }
-    }
-    
-    public long LastOperationTime {
-        get { return lastOperationTime; }
-    }
-    
-    public int YearlyPercent {
-        get { return yearlyPercent; }
-    }
-    
-    public long LastProfTime {
-        get { return lastProfTime; }
-    }
+        public long Id {
+            get { return id; }
+        }
+        
+        public string FirstName {
+            get { return firstName; }
+        }
+        
+        public string LastName {
+            get { return lastName; }
+        }
+        
+        public string SurName {
+            get { return surName; }
+        }
+        
+        public string PassportSeries {
+            get { return passportS; }
+        }
+        
+        public long PassportNum {
+            get { return passportN; }
+        }
+        
+        public double DepositAmount {
+            get { return depositAmount; }
+        }
+        
+        public int DepositCategory {
+            get { return depositCategory; }
+        }
+        
+        public long LastOperationTime {
+            get { return lastOperationTime; }
+        }
+        
+        public int YearlyPercent {
+            get { return yearlyPercent; }
+        }
+        
+        public long LastProfTime {
+            get { return lastProfTime; }
+        }
+        
+        public string FullName {
+            get { return $"{LastName}  {FirstName}  {SurName}"; }
+        }
     
     }
 }

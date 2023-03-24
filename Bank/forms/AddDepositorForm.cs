@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Bank.db;
 
-namespace Bank {
+namespace Bank.forms {
     public partial class AddDepositorForm : Form {
         public AddDepositorForm() {
             InitializeComponent();

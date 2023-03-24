@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Bank.db;
+using Bank.forms;
 
 namespace Bank {
     static class Program {

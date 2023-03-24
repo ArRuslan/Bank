@@ -1,4 +1,6 @@
-﻿namespace Bank
+﻿using System.Windows.Forms;
+
+namespace Bank.forms
 { partial class BankForm
   {
   /// <summary>
@@ -60,6 +62,7 @@
       this.depositorsList.TabIndex = 2;
       this.depositorsList.UseCompatibleStateImageBehavior = false;
       this.depositorsList.View = System.Windows.Forms.View.Details;
+      this.depositorsList.MouseClick += new MouseEventHandler(depositorsList_MouseClick);
       // 
       // column_id
       // 

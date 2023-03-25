@@ -19,7 +19,7 @@ namespace Bank.forms {
             depositAmount.Text = depositor.DepositAmount.ToString("C");
             lastOpTime.Text = BankForm.TimestampToDateTime(depositor.LastOperationTime).ToString("dd.MM.yyyy HH:mm");
             yearlyPercentage.Text = depositor.YearlyPercent.ToString();
-            lastProfitTime.Text = BankForm.TimestampToDateTime(depositor.LastProfTime).ToString("dd.MM.yyyy HH:mm");
+            lastProfitTime.Text = BankForm.TimestampToDateTime(depositor.LastAccrTime*86400).ToString("dd.MM.yyyy");
             switch (depositor.DepositCategory) {
                 case 0:
                     depositCategory.Text = "Накопичувальний";

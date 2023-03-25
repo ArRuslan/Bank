@@ -28,7 +28,7 @@ namespace Bank.db {
                     'depositCategory'	INTEGER NOT NULL,
                     'lastOperationTime'	INTEGER NOT NULL,
                     'yearlyP'	INTEGER NOT NULL,
-                    'lastProfTime'	INTEGER NOT NULL,
+                    'lastAccrTime'	INTEGER NOT NULL,
                     PRIMARY KEY(`id` AUTOINCREMENT)
                 );";
             cmd.ExecuteNonQuery();
@@ -46,7 +46,7 @@ namespace Bank.db {
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             cmd.CommandText = $@"
                 INSERT INTO `deposits` 
-                (`firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `yearlyP`, `lastOperationTime`, `lastProfTime`) 
+                (`firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `yearlyP`, `lastOperationTime`, `lastAccrTime`) 
                 VALUES 
                 (""{firstName}"", ""{lastName}"", ""{surName}"", ""{passportS}"", {passportN}, {depositAmount}, {depositCategory}, {yearlyPercent}, {currentTime}, {currentTime});
             ";
@@ -59,7 +59,7 @@ namespace Bank.db {
             SQLiteCommand cmd = connection.CreateCommand();
             cmd.CommandText = @"
                 SELECT 
-                `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastProfTime` 
+                `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastAccrTime` 
                 FROM `deposits`;
             ";
             reader = cmd.ExecuteReader();
@@ -71,7 +71,7 @@ namespace Bank.db {
                     reader.GetString(3),
                     reader.GetString(4),
                     reader.GetInt64(5),
-                    reader.GetInt64(6),
+                    reader.GetDouble(6),
                     reader.GetInt32(7),
                     reader.GetInt64(8),
                     reader.GetInt32(9),
@@ -86,7 +86,7 @@ namespace Bank.db {
             SQLiteCommand cmd = connection.CreateCommand();
             cmd.CommandText = $@"
                 SELECT 
-                `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastProfTime` 
+                `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastAccrTime` 
                 FROM `deposits` WHERE `id`={id};
             ";
             reader = cmd.ExecuteReader();
@@ -98,11 +98,11 @@ namespace Bank.db {
                     reader.GetString(3), // Surname
                     reader.GetString(4), // Passport series
                     reader.GetInt64(5), // Passport number
-                    reader.GetInt64(6), // Deposit amount
+                    reader.GetDouble(6), // Deposit amount
                     reader.GetInt32(7), // Deposit category
                     reader.GetInt64(8), // Last operation timestamp
                     reader.GetInt32(9), // Yearly percentage
-                    reader.GetInt64(10) // Last profit timestamp
+                    reader.GetInt64(10) // Last accrual timestamp
                 );
             }
             return null;
@@ -135,11 +135,13 @@ namespace Bank.db {
             cmd.ExecuteNonQuery();
         }
         
-        public static void SetDepositAmount(long id, double depositAmount) {
+        public static void SetDepositAmount(long id, double depositAmount, bool accr=false) {
             SQLiteCommand cmd = connection.CreateCommand();
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            currentTime = accr ? currentTime/86400 : currentTime;
+            string op = accr ? "lastAccrTime" : "lastOperationTime";
             cmd.CommandText = $@"
-                UPDATE `deposits` SET `depositAmount`=:depositAmount, `lastOperationTime`=:lastOpTime WHERE `id`=:id;
+                UPDATE `deposits` SET `depositAmount`=:depositAmount, `{op}`=:lastOpTime WHERE `id`=:id;
             ";
             cmd.Parameters.Add("depositAmount", DbType.Double).Value = depositAmount;
             cmd.Parameters.Add("lastOpTime", DbType.Int64).Value = currentTime;

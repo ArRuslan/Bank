@@ -29,7 +29,7 @@ namespace Bank.forms {
                     depositor.DepositAmount.ToString("C"),
                     depositor.YearlyPercent.ToString(),
                     TimestampToDateTime(depositor.LastOperationTime).ToString("dd.MM.yyyy HH:mm"),
-                    TimestampToDateTime(depositor.LastProfTime).ToString("dd.MM.yyyy HH:mm")
+                    BankForm.TimestampToDateTime(depositor.LastAccrTime*86400).ToString("dd.MM.yyyy")
                 }));
             }
         }

@@ -10,10 +10,10 @@
         private int depositCategory;
         private long lastOperationTime;
         private int yearlyPercent;
-        private long lastProfTime;
+        private long _lastAccrTime;
         
         public Depositor(int id, string firstName, string lastName, string surName, string passportS, 
-        long passportN, double depositAmount, int depositCategory, long lastOperationTime, int yearlyPercent, long lastProfTime) {
+        long passportN, double depositAmount, int depositCategory, long lastOperationTime, int yearlyPercent, long lastAccrTime) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -24,7 +24,7 @@
             this.depositCategory = depositCategory;
             this.lastOperationTime = lastOperationTime;
             this.yearlyPercent = yearlyPercent;
-            this.lastProfTime = lastProfTime;
+            this._lastAccrTime = lastAccrTime;
         }
         
         public long Id {
@@ -67,8 +67,8 @@
             get { return yearlyPercent; }
         }
         
-        public long LastProfTime {
-            get { return lastProfTime; }
+        public long LastAccrTime {
+            get { return _lastAccrTime; }
         }
         
         public string FullName {

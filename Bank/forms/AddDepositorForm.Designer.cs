@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Bank.forms
 { partial class AddDepositorForm
@@ -138,6 +139,7 @@ namespace Bank.forms
       this.depositCategory.Name = "depositCategory";
       this.depositCategory.Size = new System.Drawing.Size(174, 21);
       this.depositCategory.TabIndex = 12;
+      this.depositCategory.DropDownStyle = ComboBoxStyle.DropDownList;
       // 
       // label6
       // 
@@ -179,10 +181,11 @@ namespace Bank.forms
       this.addDepositor.UseVisualStyleBackColor = true;
       this.addDepositor.Click += new System.EventHandler(this.addDepositor_Click);
       // 
-      // AddDepositorFrom
+      // AddDepositorForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.SystemColors.Control;
       this.ClientSize = new System.Drawing.Size(304, 261);
       this.Controls.Add(this.addDepositor);
       this.Controls.Add(this.label123);
@@ -201,8 +204,8 @@ namespace Bank.forms
       this.Controls.Add(this.lastName);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.firstName);
-      this.Name = "AddDepositorFrom";
-      this.Text = "Додати вкладника";
+      this.Location = new System.Drawing.Point(15, 15);
+      this.Name = "AddDepositorForm";
       this.Load += new System.EventHandler(this.AddDepositorForm_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

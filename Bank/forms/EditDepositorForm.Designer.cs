@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Bank.forms
 { partial class EditDepositorForm
@@ -78,6 +79,7 @@ namespace Bank.forms
       this.depositCategory.Name = "depositCategory";
       this.depositCategory.Size = new System.Drawing.Size(174, 21);
       this.depositCategory.TabIndex = 29;
+      this.depositCategory.DropDownStyle = ComboBoxStyle.DropDownList;
       // 
       // label5
       // 

@@ -44,6 +44,8 @@ namespace Bank.forms
       this.lastOpTime = new System.Windows.Forms.Label();
       this.yearlyPercentage = new System.Windows.Forms.Label();
       this.lastProfitTime = new System.Windows.Forms.Label();
+      this.depositCategory = new System.Windows.Forms.Label();
+      this.label10 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label1
@@ -182,11 +184,30 @@ namespace Bank.forms
       this.lastProfitTime.TabIndex = 15;
       this.lastProfitTime.Text = "-";
       // 
+      // depositCategory
+      // 
+      this.depositCategory.Location = new System.Drawing.Point(190, 137);
+      this.depositCategory.Name = "depositCategory";
+      this.depositCategory.Size = new System.Drawing.Size(222, 16);
+      this.depositCategory.TabIndex = 17;
+      this.depositCategory.Text = "-";
+      // 
+      // label10
+      // 
+      this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+      this.label10.Location = new System.Drawing.Point(12, 137);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(172, 16);
+      this.label10.TabIndex = 16;
+      this.label10.Text = "Категорія:";
+      // 
       // FullDepositorInformation
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(424, 151);
+      this.ClientSize = new System.Drawing.Size(424, 161);
+      this.Controls.Add(this.depositCategory);
+      this.Controls.Add(this.label10);
       this.Controls.Add(this.lastProfitTime);
       this.Controls.Add(this.yearlyPercentage);
       this.Controls.Add(this.lastOpTime);
@@ -204,12 +225,16 @@ namespace Bank.forms
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
       this.Location = new System.Drawing.Point(15, 15);
-      this.MaximumSize = new System.Drawing.Size(440, 190);
-      this.MinimumSize = new System.Drawing.Size(440, 190);
+      this.MaximumSize = new System.Drawing.Size(440, 200);
+      this.MinimumSize = new System.Drawing.Size(440, 200);
       this.Name = "FullDepositorInformation";
-      this.Load += FullDepositorInformation_Load;
+      this.Text = "Повна інформація";
+      this.Load += new System.EventHandler(this.FullDepositorInformation_Load);
       this.ResumeLayout(false);
   }
+
+  private System.Windows.Forms.Label depositCategory;
+  private System.Windows.Forms.Label label10;
 
   private System.Windows.Forms.Label label6;
   private System.Windows.Forms.Label label7;

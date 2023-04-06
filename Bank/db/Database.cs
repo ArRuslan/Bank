@@ -33,22 +33,16 @@ namespace Bank.db {
                 );";
             cmd.ExecuteNonQuery();
         }
-        
-        public SQLiteConnection Connection {
-            get {
-                if(connection == null) init();
-                return connection;
-            }
-        }
-        
-        public static void AddDepositor(string firstName, string lastName, string surName, string passportS, long passportN, double depositAmount, int depositCategory, int yearlyPercent) {
+
+    public static void AddDepositor(string firstName, string lastName, string surName, string passportS, long passportN, double depositAmount, int depositCategory, int yearlyPercent) {
             SQLiteCommand cmd = connection.CreateCommand();
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            long aTime = currentTime/86400;
             cmd.CommandText = $@"
                 INSERT INTO `deposits` 
                 (`firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `yearlyP`, `lastOperationTime`, `lastAccrTime`) 
                 VALUES 
-                (""{firstName}"", ""{lastName}"", ""{surName}"", ""{passportS}"", {passportN}, {depositAmount}, {depositCategory}, {yearlyPercent}, {currentTime}, {currentTime});
+                (""{firstName}"", ""{lastName}"", ""{surName}"", ""{passportS}"", {passportN}, {depositAmount}, {depositCategory}, {yearlyPercent}, {currentTime}, {aTime});
             ";
             cmd.ExecuteNonQuery();
         }

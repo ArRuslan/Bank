@@ -64,6 +64,7 @@ namespace Bank.forms
       this.depositorsList.TabIndex = 2;
       this.depositorsList.UseCompatibleStateImageBehavior = false;
       this.depositorsList.View = System.Windows.Forms.View.Details;
+      this.depositorsList.MouseClick += new MouseEventHandler(depositorsList_MouseClick);
       // 
       // column_id
       // 

@@ -34,7 +34,7 @@ namespace Bank.db {
             cmd.ExecuteNonQuery();
         }
 
-    public static void AddDepositor(string firstName, string lastName, string surName, string passportS, long passportN, double depositAmount, int depositCategory, int yearlyPercent) {
+        public static void AddDepositor(string firstName, string lastName, string surName, string passportS, long passportN, double depositAmount, int depositCategory, int yearlyPercent) {
             SQLiteCommand cmd = connection.CreateCommand();
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             long aTime = currentTime/86400;

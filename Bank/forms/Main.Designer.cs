@@ -38,6 +38,8 @@ namespace Bank.forms
       this.column_yearly = new System.Windows.Forms.ColumnHeader();
       this.column_lastOp = new System.Windows.Forms.ColumnHeader();
       this.column_lastProf = new System.Windows.Forms.ColumnHeader();
+      this.textBox1 = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // add_depositor
@@ -55,14 +57,13 @@ namespace Bank.forms
       this.depositorsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.column_id, this.column_firstName, this.column_lastName, this.column_surName, this.column_amount, this.column_yearly, this.column_lastOp, this.column_lastProf});
       this.depositorsList.FullRowSelect = true;
       this.depositorsList.GridLines = true;
-      this.depositorsList.Location = new System.Drawing.Point(12, 12);
+      this.depositorsList.Location = new System.Drawing.Point(12, 36);
       this.depositorsList.MultiSelect = false;
       this.depositorsList.Name = "depositorsList";
-      this.depositorsList.Size = new System.Drawing.Size(680, 381);
+      this.depositorsList.Size = new System.Drawing.Size(680, 357);
       this.depositorsList.TabIndex = 2;
       this.depositorsList.UseCompatibleStateImageBehavior = false;
       this.depositorsList.View = System.Windows.Forms.View.Details;
-      this.depositorsList.MouseClick += new MouseEventHandler(depositorsList_MouseClick);
       // 
       // column_id
       // 
@@ -104,11 +105,30 @@ namespace Bank.forms
       this.column_lastProf.Text = "Останнє нарахування";
       this.column_lastProf.Width = 143;
       // 
+      // textBox1
+      // 
+      this.textBox1.Location = new System.Drawing.Point(62, 10);
+      this.textBox1.Name = "textBox1";
+      this.textBox1.Size = new System.Drawing.Size(630, 20);
+      this.textBox1.TabIndex = 3;
+      this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+      // 
+      // label1
+      // 
+      this.label1.BackColor = System.Drawing.Color.Transparent;
+      this.label1.Location = new System.Drawing.Point(12, 13);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(44, 23);
+      this.label1.TabIndex = 4;
+      this.label1.Text = "Пошук:";
+      // 
       // BankForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(704, 441);
+      this.Controls.Add(this.label1);
+      this.Controls.Add(this.textBox1);
       this.Controls.Add(this.depositorsList);
       this.Controls.Add(this.add_depositor);
       this.MaximumSize = new System.Drawing.Size(720, 480);
@@ -117,7 +137,12 @@ namespace Bank.forms
       this.Text = "Bank";
       this.Load += new System.EventHandler(this.BankForm_Load);
       this.ResumeLayout(false);
+      this.PerformLayout();
   }
+
+  private System.Windows.Forms.Label label1;
+
+  private System.Windows.Forms.TextBox textBox1;
 
   private System.Windows.Forms.ColumnHeader column_lastOp;
   private System.Windows.Forms.ColumnHeader column_lastProf;

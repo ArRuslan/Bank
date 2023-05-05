@@ -132,5 +132,10 @@ namespace Bank.forms {
             
             LoadDepositors();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) {
+            // Пошук вкладу
+            throw new System.NotImplementedException();
+        }
     }
 }

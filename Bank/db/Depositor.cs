@@ -24,56 +24,19 @@
             this.depositCategory = depositCategory;
             this.lastOperationTime = lastOperationTime;
             this.yearlyPercent = yearlyPercent;
-            this._lastAccrTime = lastAccrTime;
+            _lastAccrTime = lastAccrTime;
         }
         
-        public long Id {
-            get { return id; }
-        }
-        
-        public string FirstName {
-            get { return firstName; }
-        }
-        
-        public string LastName {
-            get { return lastName; }
-        }
-        
-        public string SurName {
-            get { return surName; }
-        }
-        
-        public string PassportSeries {
-            get { return passportS; }
-        }
-        
-        public long PassportNum {
-            get { return passportN; }
-        }
-        
-        public double DepositAmount {
-            get { return depositAmount; }
-        }
-        
-        public int DepositCategory {
-            get { return depositCategory; }
-        }
-        
-        public long LastOperationTime {
-            get { return lastOperationTime; }
-        }
-        
-        public int YearlyPercent {
-            get { return yearlyPercent; }
-        }
-        
-        public long LastAccrTime {
-            get { return _lastAccrTime; }
-        }
-        
-        public string FullName {
-            get { return $"{LastName}  {FirstName}  {SurName}"; }
-        }
-    
-    }
+        public long Id => id;
+        public string FirstName => firstName;
+        public string LastName => lastName;
+        public string SurName => surName;
+        public string PassportSeries => passportS;
+        public long PassportNum => passportN;
+        public double DepositAmount => depositAmount;
+        public int DepositCategory => depositCategory;
+        public long LastOperationTime => lastOperationTime;
+        public int YearlyPercent => yearlyPercent;
+        public long LastAccrTime => _lastAccrTime;
+        public string FullName => $"{LastName}  {FirstName}  {SurName}"; }
 }

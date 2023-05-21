@@ -48,7 +48,6 @@ namespace Bank.forms
       this.promptTextBox.Name = "promptTextBox";
       this.promptTextBox.Size = new System.Drawing.Size(372, 20);
       this.promptTextBox.TabIndex = 1;
-      this.promptTextBox.KeyDown += OnKeyDownHandler;
       // 
       // btn_Ok
       // 
@@ -79,6 +78,8 @@ namespace Bank.forms
       this.Controls.Add(this.btn_Ok);
       this.Controls.Add(this.promptTextBox);
       this.Controls.Add(this.promptTextLabel);
+      this.MaximumSize = new System.Drawing.Size(412, 138);
+      this.MinimumSize = new System.Drawing.Size(412, 138);
       this.Name = "PromptForm";
       this.Text = "Ввод";
       this.ResumeLayout(false);

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Bank.db;
 
@@ -19,8 +22,12 @@ namespace Bank.forms {
         }
         
         private void LoadDepositors() {
+            LoadDepositors(Database.GetAllDepositors());
+        }
+        
+        private void LoadDepositors(List<Depositor> depositors) {
             depositorsList.Items.Clear();
-            foreach (Depositor depositor in Database.GetAllDepositors())  {
+            foreach (Depositor depositor in depositors)  {
                 depositorsList.Items.Add(new ListViewItem(new string[] {
                     depositor.Id.ToString(),
                     depositor.FirstName,
@@ -120,6 +127,7 @@ namespace Bank.forms {
             if (e.Button == MouseButtons.Right) {
                 var focusedItem = depositorsList.FocusedItem;
                 if (focusedItem != null && focusedItem.Bounds.Contains(e.Location)) {
+                    //contextMenu.Close();
                     contextMenu.Show(Cursor.Position);
                 }
             } 
@@ -135,7 +143,22 @@ namespace Bank.forms {
 
         private void textBox1_TextChanged(object sender, EventArgs e) {
             // Пошук вкладу
-            throw new System.NotImplementedException();
+            TextBox tb = (TextBox)sender;
+            List<string> stringSearchQuery = new List<string>();
+            List<int> numberSearchQuery = new List<int>();
+            string[] queryItems = tb.Text.Split(' ');
+            foreach(string _qItem in queryItems) {
+                string qItem = _qItem.Trim();
+                if(qItem.Length == 0) continue;
+                if(qItem.All(char.IsDigit)) {
+                    try {
+                        numberSearchQuery.Add(int.Parse(qItem));
+                    } catch (Exception) {}
+                } else
+                    stringSearchQuery.Add(qItem);
+            }
+            List<Depositor> depositors = Database.Search(stringSearchQuery, numberSearchQuery);
+            LoadDepositors(depositors);
         }
     }
 }

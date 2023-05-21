@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
 
 namespace Bank.db {
     public class Database {
@@ -47,8 +48,24 @@ namespace Bank.db {
             cmd.ExecuteNonQuery();
         }
         
+        private static Depositor ReaderToDepositor(SQLiteDataReader reader) {
+            return new Depositor(
+                reader.GetInt32(0), 
+                reader.GetString(1), 
+                reader.GetString(2), 
+                reader.GetString(3),
+                reader.GetString(4),
+                reader.GetInt64(5),
+                reader.GetDouble(6),
+                reader.GetInt32(7),
+                reader.GetInt64(8),
+                reader.GetInt32(9),
+                reader.GetInt64(10)
+            );
+        }
+        
         public static List<Depositor> GetAllDepositors() {
-            List<Depositor>  depositors = new List<Depositor>();
+            List<Depositor> depositors = new List<Depositor>();
             SQLiteDataReader reader;
             SQLiteCommand cmd = connection.CreateCommand();
             cmd.CommandText = @"
@@ -58,19 +75,7 @@ namespace Bank.db {
             ";
             reader = cmd.ExecuteReader();
             while(reader.Read()) {
-                depositors.Add(new Depositor(
-                    reader.GetInt32(0), 
-                    reader.GetString(1), 
-                    reader.GetString(2), 
-                    reader.GetString(3),
-                    reader.GetString(4),
-                    reader.GetInt64(5),
-                    reader.GetDouble(6),
-                    reader.GetInt32(7),
-                    reader.GetInt64(8),
-                    reader.GetInt32(9),
-                    reader.GetInt64(10)
-                ));
+                depositors.Add(ReaderToDepositor(reader));
             }
             return depositors;
         }
@@ -85,19 +90,7 @@ namespace Bank.db {
             ";
             reader = cmd.ExecuteReader();
             if(reader.Read()) {
-                return new Depositor(
-                    reader.GetInt32(0), // Id
-                    reader.GetString(1), // First name
-                    reader.GetString(2), // Last name
-                    reader.GetString(3), // Surname
-                    reader.GetString(4), // Passport series
-                    reader.GetInt64(5), // Passport number
-                    reader.GetDouble(6), // Deposit amount
-                    reader.GetInt32(7), // Deposit category
-                    reader.GetInt64(8), // Last operation timestamp
-                    reader.GetInt32(9), // Yearly percentage
-                    reader.GetInt64(10) // Last accrual timestamp
-                );
+                return ReaderToDepositor(reader);
             }
             return null;
         }
@@ -141,6 +134,69 @@ namespace Bank.db {
             cmd.Parameters.Add("lastOpTime", DbType.Int64).Value = currentTime;
             cmd.Parameters.Add("id", DbType.Int64).Value = id;
             cmd.ExecuteNonQuery();
+        }
+        
+        public static List<Depositor> Search(List<string> stringSQ, List<int> numberSQ) {
+            if(!stringSQ.Any() && !numberSQ.Any()) return GetAllDepositors();
+        
+            List<Depositor> result = new List<Depositor>();
+            List<int> ids = null;
+            List<int> oldIds;
+
+            SQLiteDataReader reader;
+            SQLiteCommand cmd;
+            string idFilter;
+            
+            foreach(string val in stringSQ) {
+                oldIds = ids;
+                ids = new List<int>();
+                idFilter = oldIds == null ? "" : $" AND `id` in ({String.Join(",", oldIds)})";
+                
+                cmd = connection.CreateCommand();
+                cmd.CommandText = $@"
+                    SELECT `id` FROM `deposits` 
+                    WHERE (`firstName` LIKE :value OR `lastName` LIKE :value OR `surName` LIKE :value) 
+                    {idFilter};
+                ";
+                cmd.Parameters.Add("value", DbType.String).Value = $"%{val}%";
+                reader = cmd.ExecuteReader();
+                while(reader.Read()) {
+                    if(ids.Contains(reader.GetInt32(0))) continue;
+                    ids.Add(reader.GetInt32(0));
+                }
+            }
+            foreach(int val in numberSQ) {
+                oldIds = ids;
+                ids = new List<int>();
+                idFilter = oldIds == null ? "" : $" AND `id` in ({String.Join(",", oldIds)})";
+                
+                cmd = connection.CreateCommand();
+                cmd.CommandText = $@"
+                    SELECT `id` FROM `deposits` 
+                    WHERE (CAST(`id` AS TEXT) LIKE :value OR CAST(`passportN` AS TEXT) LIKE :value OR CAST(`yearlyP` AS TEXT) LIKE :value)
+                    {idFilter};
+                ";
+                cmd.Parameters.Add("value", DbType.String).Value = $"%{val}%";
+                reader = cmd.ExecuteReader();
+                while(reader.Read()) {
+                    if(ids.Contains(reader.GetInt32(0))) continue;
+                    ids.Add(reader.GetInt32(0));
+                }
+            }
+            
+            cmd = connection.CreateCommand();
+            idFilter = ids == null ? "" : $"`id` in ({String.Join(",", ids)})";
+            cmd.CommandText = $@"
+                    SELECT `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastAccrTime` 
+                    FROM `deposits` 
+                    WHERE {idFilter};
+                ";
+            reader = cmd.ExecuteReader();
+            while(reader.Read()) {
+                result.Add(ReaderToDepositor(reader));
+            }
+            
+            return result;
         }
     }
 }

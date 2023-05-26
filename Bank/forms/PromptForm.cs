@@ -7,7 +7,6 @@ namespace Bank.forms {
 
         public PromptForm() {
             InitializeComponent();
-            promptTextBox.KeyDown += OnKeyDownHandler;
         }
 
         public string GetText(string prompt) {

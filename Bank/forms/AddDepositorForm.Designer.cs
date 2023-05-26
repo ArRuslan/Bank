@@ -133,13 +133,13 @@ namespace Bank.forms
       // 
       // depositCategory
       // 
+      this.depositCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.depositCategory.FormattingEnabled = true;
       this.depositCategory.Items.AddRange(new object[] {"Накопичувальний", "Ощадний", "Універсальний"});
       this.depositCategory.Location = new System.Drawing.Point(118, 139);
       this.depositCategory.Name = "depositCategory";
       this.depositCategory.Size = new System.Drawing.Size(174, 21);
       this.depositCategory.TabIndex = 12;
-      this.depositCategory.DropDownStyle = ComboBoxStyle.DropDownList;
       // 
       // label6
       // 
@@ -205,7 +205,10 @@ namespace Bank.forms
       this.Controls.Add(this.label1);
       this.Controls.Add(this.firstName);
       this.Location = new System.Drawing.Point(15, 15);
+      this.MaximumSize = new System.Drawing.Size(320, 300);
+      this.MinimumSize = new System.Drawing.Size(320, 300);
       this.Name = "AddDepositorForm";
+      this.Text = "Додавання вкладу";
       this.Load += new System.EventHandler(this.AddDepositorForm_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

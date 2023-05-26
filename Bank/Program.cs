@@ -7,21 +7,21 @@ namespace Bank {
     static class Program {
         [STAThread]
         static void Main() {
-            string dbName = Environment.GetEnvironmentVariable("DB_NAME");
-            if(dbName == null) dbName = "bank";
-            Database.init(dbName);
-            addAccr();
+            string dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "bank";
+            Database.Init(dbName);
+            AddAccr();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BankForm());
         }
-        
-        static public void addAccr() {
+
+        private static void AddAccr() {
             long currentDay = DateTimeOffset.UtcNow.ToUnixTimeSeconds() / 86400;
             foreach (Depositor depositor in Database.GetAllDepositors()) {
-                if(currentDay > depositor.LastAccrTime) {
-                    double newAmount = depositor.DepositAmount + 
-                    depositor.DepositAmount / 100 * depositor.YearlyPercent / 365 * (currentDay-depositor.LastAccrTime);
+                if (currentDay > depositor.LastAccrTime) {
+                    double newAmount = depositor.DepositAmount +
+                                       depositor.DepositAmount / 100 * depositor.YearlyPercent / 365 *
+                                       (currentDay - depositor.LastAccrTime);
                     Database.SetDepositAmount(depositor.Id, newAmount, true);
                 }
             }

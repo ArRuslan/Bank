@@ -5,18 +5,19 @@ using System.Data.SQLite;
 using System.Linq;
 
 namespace Bank.db {
-    public class Database {
-        private static SQLiteConnection connection;
-        
-        public static void init(string fileName = "bank") {
-            connection = new SQLiteConnection($"Data Source={fileName}.db;Version=3;New=True;Compress=True;AutoCommit=True;");
-            connection.Open();
-            
+    public static class Database {
+        private static SQLiteConnection _connection;
+
+        public static void Init(string fileName = "bank") {
+            _connection =
+                new SQLiteConnection($"Data Source={fileName}.db;Version=3;New=True;Compress=True;AutoCommit=True;");
+            _connection.Open();
+
             CreateTables();
         }
-        
+
         private static void CreateTables() {
-            SQLiteCommand cmd = connection.CreateCommand();
+            SQLiteCommand cmd = _connection.CreateCommand();
             cmd.CommandText = @"
                 CREATE TABLE IF NOT EXISTS `deposits` (
                     'id'	INTEGER NOT NULL,
@@ -35,10 +36,11 @@ namespace Bank.db {
             cmd.ExecuteNonQuery();
         }
 
-        public static void AddDepositor(string firstName, string lastName, string surName, string passportS, long passportN, double depositAmount, int depositCategory, int yearlyPercent) {
-            SQLiteCommand cmd = connection.CreateCommand();
+        public static void AddDepositor(string firstName, string lastName, string surName, string passportS,
+            long passportN, double depositAmount, int depositCategory, int yearlyPercent) {
+            SQLiteCommand cmd = _connection.CreateCommand();
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            long aTime = currentTime/86400;
+            long aTime = currentTime / 86400;
             cmd.CommandText = $@"
                 INSERT INTO `deposits` 
                 (`firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `yearlyP`, `lastOperationTime`, `lastAccrTime`) 
@@ -47,12 +49,12 @@ namespace Bank.db {
             ";
             cmd.ExecuteNonQuery();
         }
-        
+
         private static Depositor ReaderToDepositor(SQLiteDataReader reader) {
             return new Depositor(
-                reader.GetInt32(0), 
-                reader.GetString(1), 
-                reader.GetString(2), 
+                reader.GetInt32(0),
+                reader.GetString(1),
+                reader.GetString(2),
                 reader.GetString(3),
                 reader.GetString(4),
                 reader.GetInt64(5),
@@ -63,40 +65,41 @@ namespace Bank.db {
                 reader.GetInt64(10)
             );
         }
-        
+
         public static List<Depositor> GetAllDepositors() {
             List<Depositor> depositors = new List<Depositor>();
-            SQLiteDataReader reader;
-            SQLiteCommand cmd = connection.CreateCommand();
+            SQLiteCommand cmd = _connection.CreateCommand();
             cmd.CommandText = @"
                 SELECT 
                 `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastAccrTime` 
                 FROM `deposits`;
             ";
-            reader = cmd.ExecuteReader();
-            while(reader.Read()) {
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read()) {
                 depositors.Add(ReaderToDepositor(reader));
             }
+
             return depositors;
         }
-        
+
         public static Depositor GetDepositor(int id) {
-            SQLiteDataReader reader;
-            SQLiteCommand cmd = connection.CreateCommand();
+            SQLiteCommand cmd = _connection.CreateCommand();
             cmd.CommandText = $@"
                 SELECT 
                 `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastAccrTime` 
                 FROM `deposits` WHERE `id`={id};
             ";
-            reader = cmd.ExecuteReader();
-            if(reader.Read()) {
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.Read()) {
                 return ReaderToDepositor(reader);
             }
+
             return null;
         }
-        
-        public static void EditDepositor(long id, string firstName, string lastName, string surName, string passportSeries, long passportNum, int depositCategory, int yearlyPercent) {
-            SQLiteCommand cmd = connection.CreateCommand();
+
+        public static void EditDepositor(long id, string firstName, string lastName, string surName,
+            string passportSeries, long passportNum, int depositCategory, int yearlyPercent) {
+            SQLiteCommand cmd = _connection.CreateCommand();
             cmd.CommandText = $@"
                 UPDATE `deposits` SET
                 `firstName`=:firstName, `lastName`=:lastName, `surName`=:surName, `passportS`=:passportS, `passportN`=:passportNum, 
@@ -113,19 +116,19 @@ namespace Bank.db {
             cmd.Parameters.Add("id", DbType.Int64).Value = id;
             cmd.ExecuteNonQuery();
         }
-        
+
         public static void DeleteDepositor(Depositor depositor) {
-            SQLiteCommand cmd = connection.CreateCommand();
+            SQLiteCommand cmd = _connection.CreateCommand();
             cmd.CommandText = $@"
                 DELETE FROM `deposits` WHERE `id`={depositor.Id};
             ";
             cmd.ExecuteNonQuery();
         }
-        
-        public static void SetDepositAmount(long id, double depositAmount, bool accr=false) {
-            SQLiteCommand cmd = connection.CreateCommand();
+
+        public static void SetDepositAmount(long id, double depositAmount, bool accr = false) {
+            SQLiteCommand cmd = _connection.CreateCommand();
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            currentTime = accr ? currentTime/86400 : currentTime;
+            currentTime = accr ? currentTime / 86400 : currentTime;
             string op = accr ? "lastAccrTime" : "lastOperationTime";
             cmd.CommandText = $@"
                 UPDATE `deposits` SET `depositAmount`=:depositAmount, `{op}`=:lastOpTime WHERE `id`=:id;
@@ -135,10 +138,10 @@ namespace Bank.db {
             cmd.Parameters.Add("id", DbType.Int64).Value = id;
             cmd.ExecuteNonQuery();
         }
-        
-        public static List<Depositor> Search(List<string> stringSQ, List<int> numberSQ) {
-            if(!stringSQ.Any() && !numberSQ.Any()) return GetAllDepositors();
-        
+
+        public static List<Depositor> Search(List<string> stringSq, List<int> numberSq) {
+            if (!stringSq.Any() && !numberSq.Any()) return GetAllDepositors();
+
             List<Depositor> result = new List<Depositor>();
             List<int> ids = null;
             List<int> oldIds;
@@ -146,31 +149,32 @@ namespace Bank.db {
             SQLiteDataReader reader;
             SQLiteCommand cmd;
             string idFilter;
-            
-            foreach(string val in stringSQ) {
+
+            foreach (string val in stringSq) {
                 oldIds = ids;
                 ids = new List<int>();
                 idFilter = oldIds == null ? "" : $" AND `id` in ({String.Join(",", oldIds)})";
-                
-                cmd = connection.CreateCommand();
+
+                cmd = _connection.CreateCommand();
                 cmd.CommandText = $@"
                     SELECT `id` FROM `deposits` 
-                    WHERE (`firstName` LIKE :value OR `lastName` LIKE :value OR `surName` LIKE :value) 
+                    WHERE (`firstName` LIKE :value OR `lastName` LIKE :value OR `surName` LIKE :value OR `passportS` LIKE :value) 
                     {idFilter};
                 ";
                 cmd.Parameters.Add("value", DbType.String).Value = $"%{val}%";
                 reader = cmd.ExecuteReader();
-                while(reader.Read()) {
-                    if(ids.Contains(reader.GetInt32(0))) continue;
+                while (reader.Read()) {
+                    if (ids.Contains(reader.GetInt32(0))) continue;
                     ids.Add(reader.GetInt32(0));
                 }
             }
-            foreach(int val in numberSQ) {
+
+            foreach (int val in numberSq) {
                 oldIds = ids;
                 ids = new List<int>();
                 idFilter = oldIds == null ? "" : $" AND `id` in ({String.Join(",", oldIds)})";
-                
-                cmd = connection.CreateCommand();
+
+                cmd = _connection.CreateCommand();
                 cmd.CommandText = $@"
                     SELECT `id` FROM `deposits` 
                     WHERE (CAST(`id` AS TEXT) LIKE :value OR CAST(`passportN` AS TEXT) LIKE :value OR CAST(`yearlyP` AS TEXT) LIKE :value)
@@ -178,13 +182,13 @@ namespace Bank.db {
                 ";
                 cmd.Parameters.Add("value", DbType.String).Value = $"%{val}%";
                 reader = cmd.ExecuteReader();
-                while(reader.Read()) {
-                    if(ids.Contains(reader.GetInt32(0))) continue;
+                while (reader.Read()) {
+                    if (ids.Contains(reader.GetInt32(0))) continue;
                     ids.Add(reader.GetInt32(0));
                 }
             }
-            
-            cmd = connection.CreateCommand();
+
+            cmd = _connection.CreateCommand();
             idFilter = ids == null ? "" : $"`id` in ({String.Join(",", ids)})";
             cmd.CommandText = $@"
                     SELECT `id`, `firstName`, `lastName`, `surName`, `passportS`, `passportN`, `depositAmount`, `depositCategory`, `lastOperationTime`, `yearlyP`, `lastAccrTime` 
@@ -192,10 +196,10 @@ namespace Bank.db {
                     WHERE {idFilter};
                 ";
             reader = cmd.ExecuteReader();
-            while(reader.Read()) {
+            while (reader.Read()) {
                 result.Add(ReaderToDepositor(reader));
             }
-            
+
             return result;
         }
     }

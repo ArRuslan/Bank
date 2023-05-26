@@ -4,10 +4,12 @@ using System.Windows.Forms;
 namespace Bank.forms {
     public partial class PromptForm : Form {
         bool returnText = false;
+
         public PromptForm() {
             InitializeComponent();
+            promptTextBox.KeyDown += OnKeyDownHandler;
         }
-        
+
         public string GetText(string prompt) {
             promptTextLabel.Text = prompt;
             ShowDialog();
@@ -23,9 +25,9 @@ namespace Bank.forms {
             promptTextBox.Text = "";
             Close();
         }
-        
+
         private void OnKeyDownHandler(object sender, KeyEventArgs e) {
-            if(e.KeyCode == Keys.Enter) {
+            if (e.KeyCode == Keys.Enter) {
                 returnText = true;
                 Close();
             }

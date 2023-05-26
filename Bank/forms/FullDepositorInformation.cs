@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Windows.Forms;
 using Bank.db;
+// ReSharper disable LocalizableElement
+// ReSharper disable StringLiteralTypo
 
 namespace Bank.forms {
     public partial class FullDepositorInformation : Form {
-        private Depositor depositor;
-        
+        private readonly Depositor _depositor;
+
         public FullDepositorInformation(Depositor depositor) {
-            this.depositor = depositor;
+            _depositor = depositor;
             InitializeComponent();
         }
 
         private void FullDepositorInformation_Load(object sender, EventArgs e) {
-            depositId.Text = depositor.Id.ToString();
-            fullName.Text = depositor.FullName;
-            passportSeries.Text = depositor.PassportSeries;
-            passportNum.Text = depositor.PassportNum.ToString();
-            depositAmount.Text = depositor.DepositAmount.ToString("C");
-            lastOpTime.Text = BankForm.TimestampToDateTime(depositor.LastOperationTime).ToString("dd.MM.yyyy HH:mm");
-            yearlyPercentage.Text = depositor.YearlyPercent.ToString();
-            lastProfitTime.Text = BankForm.TimestampToDateTime(depositor.LastAccrTime*86400).ToString("dd.MM.yyyy");
-            switch (depositor.DepositCategory) {
+            depositId.Text = _depositor.Id.ToString();
+            fullName.Text = _depositor.FullName;
+            passportSeries.Text = _depositor.PassportSeries;
+            passportNum.Text = _depositor.PassportNum.ToString();
+            depositAmount.Text = _depositor.DepositAmount.ToString("C");
+            lastOpTime.Text = BankForm.TimestampToDateTime(_depositor.LastOperationTime).ToString("dd.MM.yyyy HH:mm");
+            yearlyPercentage.Text = _depositor.YearlyPercent.ToString();
+            lastProfitTime.Text = BankForm.TimestampToDateTime(_depositor.LastAccrTime * 86400).ToString("dd.MM.yyyy");
+            switch (_depositor.DepositCategory) {
                 case 0:
                     depositCategory.Text = "Накопичувальний";
                     break;

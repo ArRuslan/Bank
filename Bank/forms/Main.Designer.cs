@@ -38,7 +38,7 @@ namespace Bank.forms
       this.column_yearly = new System.Windows.Forms.ColumnHeader();
       this.column_lastOp = new System.Windows.Forms.ColumnHeader();
       this.column_lastProf = new System.Windows.Forms.ColumnHeader();
-      this.textBox1 = new System.Windows.Forms.TextBox();
+      this.searchTextBox = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
@@ -48,7 +48,7 @@ namespace Bank.forms
       this.add_depositor.Name = "add_depositor";
       this.add_depositor.Size = new System.Drawing.Size(680, 41);
       this.add_depositor.TabIndex = 1;
-      this.add_depositor.Text = "Додати вкладника";
+      this.add_depositor.Text = "Додати вклад";
       this.add_depositor.UseVisualStyleBackColor = true;
       this.add_depositor.Click += new System.EventHandler(this.button1_Click);
       // 
@@ -106,13 +106,13 @@ namespace Bank.forms
       this.column_lastProf.Text = "Останнє нарахування";
       this.column_lastProf.Width = 143;
       // 
-      // textBox1
+      // searchTextBox
       // 
-      this.textBox1.Location = new System.Drawing.Point(62, 10);
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(630, 20);
-      this.textBox1.TabIndex = 3;
-      this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+      this.searchTextBox.Location = new System.Drawing.Point(62, 10);
+      this.searchTextBox.Name = "searchTextBox";
+      this.searchTextBox.Size = new System.Drawing.Size(630, 20);
+      this.searchTextBox.TabIndex = 3;
+      this.searchTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
       // 
       // label1
       // 
@@ -129,7 +129,7 @@ namespace Bank.forms
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(704, 441);
       this.Controls.Add(this.label1);
-      this.Controls.Add(this.textBox1);
+      this.Controls.Add(this.searchTextBox);
       this.Controls.Add(this.depositorsList);
       this.Controls.Add(this.add_depositor);
       this.MaximumSize = new System.Drawing.Size(720, 480);
@@ -143,7 +143,7 @@ namespace Bank.forms
 
   private System.Windows.Forms.Label label1;
 
-  private System.Windows.Forms.TextBox textBox1;
+  private System.Windows.Forms.TextBox searchTextBox;
 
   private System.Windows.Forms.ColumnHeader column_lastOp;
   private System.Windows.Forms.ColumnHeader column_lastProf;

@@ -40,13 +40,16 @@ namespace Bank.forms
       this.column_lastProf = new System.Windows.Forms.ColumnHeader();
       this.searchTextBox = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
       // add_depositor
       // 
-      this.add_depositor.Location = new System.Drawing.Point(12, 399);
+      this.add_depositor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.add_depositor.Location = new System.Drawing.Point(3, 395);
       this.add_depositor.Name = "add_depositor";
-      this.add_depositor.Size = new System.Drawing.Size(680, 41);
+      this.add_depositor.Size = new System.Drawing.Size(698, 41);
       this.add_depositor.TabIndex = 1;
       this.add_depositor.Text = "Додати вклад";
       this.add_depositor.UseVisualStyleBackColor = true;
@@ -55,12 +58,13 @@ namespace Bank.forms
       // depositorsList
       // 
       this.depositorsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.column_id, this.column_firstName, this.column_lastName, this.column_surName, this.column_amount, this.column_yearly, this.column_lastOp, this.column_lastProf});
+      this.depositorsList.Dock = System.Windows.Forms.DockStyle.Fill;
       this.depositorsList.FullRowSelect = true;
       this.depositorsList.GridLines = true;
-      this.depositorsList.Location = new System.Drawing.Point(12, 36);
+      this.depositorsList.Location = new System.Drawing.Point(3, 56);
       this.depositorsList.MultiSelect = false;
       this.depositorsList.Name = "depositorsList";
-      this.depositorsList.Size = new System.Drawing.Size(680, 357);
+      this.depositorsList.Size = new System.Drawing.Size(698, 333);
       this.depositorsList.TabIndex = 2;
       this.depositorsList.UseCompatibleStateImageBehavior = false;
       this.depositorsList.View = System.Windows.Forms.View.Details;
@@ -108,38 +112,60 @@ namespace Bank.forms
       // 
       // searchTextBox
       // 
-      this.searchTextBox.Location = new System.Drawing.Point(62, 10);
+      this.searchTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.searchTextBox.Location = new System.Drawing.Point(3, 25);
       this.searchTextBox.Name = "searchTextBox";
-      this.searchTextBox.Size = new System.Drawing.Size(630, 20);
+      this.searchTextBox.Size = new System.Drawing.Size(698, 20);
       this.searchTextBox.TabIndex = 3;
       this.searchTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
       // 
       // label1
       // 
       this.label1.BackColor = System.Drawing.Color.Transparent;
-      this.label1.Location = new System.Drawing.Point(12, 13);
+      this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label1.Location = new System.Drawing.Point(3, 0);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(44, 23);
+      this.label1.Size = new System.Drawing.Size(698, 22);
       this.label1.TabIndex = 4;
       this.label1.Text = "Пошук:";
+      // 
+      // tableLayoutPanel1
+      // 
+      this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+      this.tableLayoutPanel1.ColumnCount = 1;
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel1.Controls.Add(this.depositorsList, 0, 2);
+      this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+      this.tableLayoutPanel1.Controls.Add(this.searchTextBox, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.add_depositor, 0, 3);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+      this.tableLayoutPanel1.RowCount = 4;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.154639F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.216495F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 77.31959F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.30928F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(704, 439);
+      this.tableLayoutPanel1.TabIndex = 5;
       // 
       // BankForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(704, 441);
-      this.Controls.Add(this.label1);
-      this.Controls.Add(this.searchTextBox);
-      this.Controls.Add(this.depositorsList);
-      this.Controls.Add(this.add_depositor);
-      this.MaximumSize = new System.Drawing.Size(720, 480);
-      this.MinimumSize = new System.Drawing.Size(720, 480);
+      this.Controls.Add(this.tableLayoutPanel1);
+      this.DoubleBuffered = true;
+      this.MaximumSize = new System.Drawing.Size(1920, 1080);
+      this.MinimumSize = new System.Drawing.Size(250, 480);
       this.Name = "BankForm";
       this.Text = "Bank";
       this.Load += new System.EventHandler(this.BankForm_Load);
+      this.tableLayoutPanel1.ResumeLayout(false);
+      this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
   }
+
+  private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 
   private System.Windows.Forms.Label label1;
 

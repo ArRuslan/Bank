@@ -46,7 +46,7 @@ namespace Bank.forms {
             surname.Text = _depositor.SurName;
             passportS.Text = _depositor.PassportSeries;
             passportNum.Text = _depositor.PassportNum.ToString();
-            depositCategory.SelectedIndex = _depositor.DepositCategory;
+            depositCategory.SelectedIndex = (int)_depositor.DepositCategory;
             yearlyPercent.Text = _depositor.YearlyPercent.ToString();
         }
     }

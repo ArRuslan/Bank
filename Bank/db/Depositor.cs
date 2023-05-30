@@ -1,7 +1,13 @@
 ﻿namespace Bank.db {
+    public enum DepositCategory {
+        Accumulative = 0,
+        Thrifty = 1,
+        Universal = 2,
+    }
+
     public class Depositor {
         public Depositor(int id, string firstName, string lastName, string surName, string passportS,
-            long passportN, double depositAmount, int depositCategory, long lastOperationTime, int yearlyPercent,
+            long passportN, double depositAmount, DepositCategory depositCategory, long lastOperationTime, int yearlyPercent,
             long lastAccrTime) {
             Id = id;
             FirstName = firstName;
@@ -23,7 +29,7 @@
         public string PassportSeries { get; }
         public long PassportNum { get; }
         public double DepositAmount { get; }
-        public int DepositCategory { get; }
+        public DepositCategory DepositCategory { get; }
         public long LastOperationTime { get; }
         public int YearlyPercent { get; }
         public long LastAccrTime { get; }

@@ -59,7 +59,7 @@ namespace Bank.db {
                 reader.GetString(4),
                 reader.GetInt64(5),
                 reader.GetDouble(6),
-                reader.GetInt32(7),
+                (DepositCategory)reader.GetInt32(7),
                 reader.GetInt64(8),
                 reader.GetInt32(9),
                 reader.GetInt64(10)

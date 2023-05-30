@@ -23,13 +23,13 @@ namespace Bank.forms {
             yearlyPercentage.Text = _depositor.YearlyPercent.ToString();
             lastProfitTime.Text = BankForm.TimestampToDateTime(_depositor.LastAccrTime * 86400).ToString("dd.MM.yyyy");
             switch (_depositor.DepositCategory) {
-                case 0:
+                case DepositCategory.Accumulative:
                     depositCategory.Text = "Накопичувальний";
                     break;
-                case 1:
+                case DepositCategory.Thrifty:
                     depositCategory.Text = "Ощадний";
                     break;
-                case 2:
+                case DepositCategory.Universal:
                     depositCategory.Text = "Універсальний";
                     break;
             }

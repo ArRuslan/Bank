@@ -54,7 +54,7 @@ namespace Bank.forms {
                     new FullDepositorInformation(depositor).ShowDialog();
                     break;
                 case "Поповнити вклад":
-                    if (depositor.DepositCategory == 1) {
+                    if (depositor.DepositCategory == DepositCategory.Thrifty) {
                         MessageBox.Show("Ощадний вклад не можна поповнити!", "Помилка!", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                         return;
@@ -81,7 +81,7 @@ namespace Bank.forms {
                     LoadDepositors();
                     break;
                 case "Зняти з вкладу":
-                    if (depositor.DepositCategory != 2) {
+                    if (depositor.DepositCategory != DepositCategory.Universal) {
                         string category = (depositor.DepositCategory == 0) ? "Накопичувальний" : "Ощадний";
                         MessageBox.Show($"{category} вклад не можна зняти!", "Помилка!", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);

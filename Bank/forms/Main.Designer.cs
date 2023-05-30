@@ -156,7 +156,7 @@ namespace Bank.forms
       this.Controls.Add(this.tableLayoutPanel1);
       this.DoubleBuffered = true;
       this.MaximumSize = new System.Drawing.Size(1920, 1080);
-      this.MinimumSize = new System.Drawing.Size(250, 480);
+      this.MinimumSize = new System.Drawing.Size(720, 480);
       this.Name = "BankForm";
       this.Text = "Bank";
       this.Load += new System.EventHandler(this.BankForm_Load);

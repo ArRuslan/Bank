@@ -11,10 +11,6 @@ namespace Bank.forms {
     public partial class BankForm : Form {
         public BankForm() {
             InitializeComponent();
-            add_depositor.Resize += (sender, args) => {
-                MessageBox.Show(add_depositor.Width.ToString(), "Помилка!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            };
         }
 
         private void button1_Click(object sender, EventArgs e) {
